@@ -1,0 +1,56 @@
+# <title>Shadowsocks Installation and Configuration</title>
+
+>Below is ss installation and configuration based on materials from internet.
+
+## <title>Config from server side</title>
+
+### <title>AWS VM Setup</title>
+> Login to AWS VM via pem file, and execute: ``` sudo su```
+### <title>SS Dependencies</title>
+> Install python3.7: ```yum install python3```
+
+> Install git: ```python3 -m pip install git```
+
+> Install ss package:```ython3 -m pip install git+https://github.com/shadowsocks/shadowsocks.git@master```
+
+### <title>SS Configuration</title>
+> Add Configurations in ```/etc/shadowsocks.json```
+> Paste below contents into ```/etc/shadowsocks.json```
+
+> ```json
+{
+    "server":"0.0.0.0",
+    "local_address":"127.0.0.1",
+    "local_port":1080,
+    "port_password":{
+    "9000":"c@123456",
+    "9001":"c@123456"
+    },
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false
+}
+
+> Start the shadowsocks process:
+> ```/usr/local/bin/ssserver -c /etc/shadowsocks.json -d start```
+> Make sure the process is running: ```ps -ef |grep ssserver|grep -v grep```
+
+### <title>Network Accelearting</title>
+> Download the bbr packages: ```wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh
+chmod +x bbr.sh```
+> Execute: ```chmod +x bbr.sh && ./bbr.ssh```
+> reboot VM
+### <title>Add port mapping for public IP of AWS VM</title>
+
+## <title>Config from client side</title>
+### <title>Mac Client Download</title>
+> Download the ss client：
+```wget https://github-production-release-asset-2e65be.s3.amazonaws.com/60844036/2ff32e80-c597-11e8-92fb-97457242447b?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20190825%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20190825T041531Z&X-Amz-Expires=300&X-Amz-Signature=2a36f961118e0f```
+
+> Config VPN Server in Client
+
+![](./server1.png)
+
+### <title>Client Configuration</title>
+
+![](./server2.png)
